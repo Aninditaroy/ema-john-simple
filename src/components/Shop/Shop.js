@@ -35,11 +35,12 @@ const Shop = () => {
                 <h4>Grand Total: { }</h4>
                 <button className='clear-cart'>
                     <p className='btn-text-1'>Clear Cart</p>
-                    <FontAwesomeIcon icon={faArrowRight}/>
+                    <FontAwesomeIcon icon={faTrashCan} />
                 </button>
                 <button className='review-order'>
                     <p className='btn-text-2'>Review Order</p>
-                    <FontAwesomeIcon icon={faTrashCan} />
+                    <FontAwesomeIcon icon={faArrowRight}
+                    />
                 </button>
 
             </div>

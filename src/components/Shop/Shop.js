@@ -1,20 +1,52 @@
 import React, { useEffect, useState } from 'react';
+import Cart from '../Cart/Cart';
+import { addToDb, getStoredcart } from '../../utilities/fakedb';
 import Product from '../Product/Product';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import './Shop.css';
+
+
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
     useEffect(() => {
+        // console.log('products load before fetch');
         fetch('products.json')
             .then(res => res.json())
-            .then(data => setProducts(data));
+            .then(data => 
+                {setProducts(data)
+                // console.log('products loaded')
+            });
     }, []);
-    const handleAddToCart = (product) => {
-        const newCart = [...cart, product];
+    useEffect(() => {
+        // console.log('local storage first line',products);
+        const storedCart = getStoredcart();
+        const savedCart = [];
+        for (const id in storedCart) {
+            const addedProduct = products.find(product => product.id === id);
+            if(addedProduct){
+                const quantity  = storedCart[id];
+                addedProduct.quantity = quantity;
+                savedCart.push(addedProduct);
+            }
+        }
+        setCart(savedCart);
+        // console.log('local storage finished');
+    }, [products]);
+    const handleAddToCart = (selectedProduct) => {
+        let newCart = [];
+        const exists = cart.find(product => [product.id === selectedProduct.id]);
+        if(!exists){
+            selectedProduct.quantity = 1;
+            newCart = [...cart, selectedProduct];
+        }
+        else{
+            const rest = cart.filter(product => product.id !== selectedProduct.id);
+            exists.quantity = exists.quantity + 1;
+            newCart = [...rest,exists];
+        }
         setCart(newCart);
+        addToDb(selectedProduct.id);
     }
     return (
         <div className='shop-container'>
@@ -27,22 +59,7 @@ const Shop = () => {
                 }
             </div>
             <div className="cart-container">
-                <h4>Order summary</h4>
-                <p>Selected items: {cart.length}</p>
-                <p>Total price: ${ }</p>
-                <p>Total Shipping Charge: { }</p>
-                <p>Tax: { }</p>
-                <h4>Grand Total: { }</h4>
-                <button className='clear-cart'>
-                    <p className='btn-text-1'>Clear Cart</p>
-                    <FontAwesomeIcon icon={faTrashCan} />
-                </button>
-                <button className='review-order'>
-                    <p className='btn-text-2'>Review Order</p>
-                    <FontAwesomeIcon icon={faArrowRight}
-                    />
-                </button>
-
+                <Cart cart={cart} />
             </div>
         </div>
     );

@@ -3,39 +3,4 @@
     top: 0;
     padding: 30px 20px;
 }
-.clear-cart {
-    width: 70%;
-    background-color: #FF3030;
-    border: none;
-    color: white;
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 17px;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-}
-.clear-cart .btn-text-1 {
-    margin-right: 7px;
-}
-.review-order {
-    width: 70%;
-    background-color: #FF9900;
-    border: none;
-    color: white;
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 17px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.review-order .btn-text-2 {
-    margin-right: 7px;
-} 
+ 
